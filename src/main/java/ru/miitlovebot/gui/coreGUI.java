@@ -1,4 +1,5 @@
 package ru.miitlovebot.gui;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +15,10 @@ import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import ru.miitlovebot.database.connectDB;
 
 
-public class coreGUI  {
-    connectDB conn=new connectDB();
-    public SendMessage sendMsgCore (Message message, String text) {
+public class coreGUI {
+    connectDB conn = new connectDB();
+
+    public SendMessage sendMsgCore(Message message, String text) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
@@ -24,17 +26,14 @@ public class coreGUI  {
         return sendMessage;
 
     }
-    public SendSticker sendStikerCore (String chatid,String sticker) {
+
+    public SendSticker sendStikerCore(String chatid, String sticker) {
         SendSticker sendstiker = new SendSticker();
 
         sendstiker.setChatId(chatid);
 
 
-
-
         sendstiker.setSticker(sticker);
-
-
 
 
         return sendstiker;
@@ -42,8 +41,7 @@ public class coreGUI  {
     }
 
 
-    public SendMessage createInlineButtondMenu(Message message, String text)
-    {
+    public SendMessage createInlineButtondMenu(Message message, String text) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
@@ -68,13 +66,13 @@ public class coreGUI  {
         sendMessage.setReplyMarkup(inlineKeyboardMarkup);
         return sendMessage;
     }
-    public SendPhoto  SearchPeople(Message message)
-    {
-        List<String> info=conn.selectPeople(message.getChatId().toString());
+
+    public SendPhoto SearchPeople(Message message) {
+        List<String> info = conn.selectPeople(message.getChatId().toString());
         SendPhoto msg = new SendPhoto()
                 .setChatId(message.getChatId().toString())
                 .setPhoto(info.get(2))
-                .setCaption("Имя: "+info.get(1)+"\nОписание: "+info.get(3)+"\nВозраст: "+info.get(4));
+                .setCaption("Имя: " + info.get(1) + "\nОписание: " + info.get(3) + "\nВозраст: " + info.get(4));
 
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rows = new ArrayList<>();
@@ -95,13 +93,13 @@ public class coreGUI  {
         msg.setReplyMarkup(inlineKeyboardMarkup);
         return msg;
     }
-    public SendPhoto  SearchPeople(String chatId)
-    {
-        List<String> info=conn.selectPeople(chatId);
+
+    public SendPhoto SearchPeople(String chatId) {
+        List<String> info = conn.selectPeople(chatId);
         SendPhoto msg = new SendPhoto()
                 .setChatId(chatId)
                 .setPhoto(info.get(2))
-                .setCaption("Имя: "+info.get(1)+"\nОписание: "+info.get(3)+"\nВозраст: "+info.get(4));
+                .setCaption("Имя: " + info.get(1) + "\nОписание: " + info.get(3) + "\nВозраст: " + info.get(4));
 
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
@@ -124,13 +122,13 @@ public class coreGUI  {
         msg.setReplyMarkup(inlineKeyboardMarkup);
         return msg;
     }
-    public SendPhoto  ReturnMeForPeople(String chatIdMe,String chatIdYou)
-    {
-        List<String> info=conn.selectMe(chatIdMe);
+
+    public SendPhoto ReturnMeForPeople(String chatIdMe, String chatIdYou) {
+        List<String> info = conn.selectMe(chatIdMe);
         SendPhoto msg = new SendPhoto()
                 .setChatId(chatIdYou)
                 .setPhoto(info.get(2))
-                .setCaption("Имя: "+info.get(1)+"\nОписание: "+info.get(3)+"\nВозраст: "+info.get(4));
+                .setCaption("Имя: " + info.get(1) + "\nОписание: " + info.get(3) + "\nВозраст: " + info.get(4));
 
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
@@ -153,33 +151,31 @@ public class coreGUI  {
         msg.setReplyMarkup(inlineKeyboardMarkup);
         return msg;
     }
-    public SendPhoto  ReturnMeForPeopleEnd(String chatIdMe,String chatIdYou)
-    {
-        List<String> info=conn.selectMe(chatIdMe);
+
+    public SendPhoto ReturnMeForPeopleEnd(String chatIdMe, String chatIdYou) {
+        List<String> info = conn.selectMe(chatIdMe);
         SendPhoto msg = new SendPhoto()
                 .setChatId(chatIdYou)
                 .setPhoto(info.get(2))
-                .setCaption("Имя: "+info.get(1)+"\nОписание: "+info.get(3)+"\nВозраст: "+info.get(4));
+                .setCaption("Имя: " + info.get(1) + "\nОписание: " + info.get(3) + "\nВозраст: " + info.get(4));
 
         return msg;
     }
-    public SendMessage  ReturnMeForPeopleEndMes(String chatIdMe,String chatIdYou)
-    {
-        List<String> info=conn.selectMeEnd(chatIdMe);
-        List<String> info2=conn.selectMeEnd(chatIdYou);
+
+    public SendMessage ReturnMeForPeopleEndMes(String chatIdMe, String chatIdYou) {
+        List<String> info = conn.selectMeEnd(chatIdMe);
+        List<String> info2 = conn.selectMeEnd(chatIdYou);
         SendMessage sendMessage = new SendMessage();
         sendMessage.disableWebPagePreview();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatIdMe);
-        sendMessage.setText("Уррраа! Образовалась новая пара "+info.get(0)+" - "+info2.get(0)+". Начните общаться в телеграмме по номеру: +"+info2.get(1)+" ❤️  \nНебольшая [инструкция](http://telegram.org.ru/357-kak-dobavit-kontakt-v-telegram.html) как создать чат.");
-
+        sendMessage.setText("Уррраа! Образовалась новая пара " + info.get(0) + " - " + info2.get(0) + ". Начните общаться в телеграмме по номеру: +" + info2.get(1) + " ❤️  \nНебольшая [инструкция](http://telegram.org.ru/357-kak-dobavit-kontakt-v-telegram.html) как создать чат.");
 
 
         return sendMessage;
     }
 
-    public SendMessage startBot(Message message, String text)
-    {
+    public SendMessage startBot(Message message, String text) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
@@ -217,8 +213,8 @@ public class coreGUI  {
         return sendMessage;
 
     }
-    public SendMessage OptionstBot(Message message, String text)
-    {
+
+    public SendMessage OptionstBot(Message message, String text) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
@@ -264,8 +260,7 @@ public class coreGUI  {
 
     }
 
-    public SendMessage registerBot(Message message, String text)
-    {
+    public SendMessage registerBot(Message message, String text) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
@@ -284,7 +279,7 @@ public class coreGUI  {
         // Добавляем кнопки в первую строчку клавиатуры
 
         // Добавляем кнопки во вторую строчку клавиатуры
-        KeyboardButton key2=new KeyboardButton();
+        KeyboardButton key2 = new KeyboardButton();
         //keyboardSecondRow.add("🚆Об университете");
         key2.setText("📇Регистрация").getRequestContact();
         key2.setRequestContact(true);
@@ -297,8 +292,8 @@ public class coreGUI  {
         return sendMessage;
 
     }
-    public SendMessage registerHelpBot(Message message, String text)
-    {
+
+    public SendMessage registerHelpBot(Message message, String text) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
@@ -317,7 +312,7 @@ public class coreGUI  {
         // Добавляем кнопки в первую строчку клавиатуры
 
         // Добавляем кнопки во вторую строчку клавиатуры
-        KeyboardButton key2=new KeyboardButton();
+        KeyboardButton key2 = new KeyboardButton();
         //keyboardSecondRow.add("🚆Об университете");
         key2.setText("❗️Помощь");
         keyboardFirstRow.add(key2);
@@ -329,8 +324,8 @@ public class coreGUI  {
         return sendMessage;
 
     }
-    public SendMessage registerHelp2Bot(Message message, String text)
-    {
+
+    public SendMessage registerHelp2Bot(Message message, String text) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
@@ -361,8 +356,8 @@ public class coreGUI  {
         return sendMessage;
 
     }
-    public SendMessage registerNextBot(Message message, String text)
-    {
+
+    public SendMessage registerNextBot(Message message, String text) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
@@ -381,7 +376,7 @@ public class coreGUI  {
         // Добавляем кнопки в первую строчку клавиатуры
 
         // Добавляем кнопки во вторую строчку клавиатуры
-        KeyboardButton key2=new KeyboardButton();
+        KeyboardButton key2 = new KeyboardButton();
         //keyboardSecondRow.add("🚆Об университете");
         key2.setText("📇Продолжить");
         keyboardFirstRow.add(key2);
@@ -393,8 +388,8 @@ public class coreGUI  {
         return sendMessage;
 
     }
-    public SendMessage registerAgeBot(Message message, String text)
-    {
+
+    public SendMessage registerAgeBot(Message message, String text) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
@@ -409,12 +404,10 @@ public class coreGUI  {
         List<KeyboardRow> keyboard = new ArrayList<>();
 
 
-
-
-        for(int i=0;i<8;i++)
-        {   KeyboardRow    keyboardFirstRow = new KeyboardRow();
-            KeyboardButton keyitem=new KeyboardButton();
-            int age=17+i;
+        for (int i = 0; i < 8; i++) {
+            KeyboardRow keyboardFirstRow = new KeyboardRow();
+            KeyboardButton keyitem = new KeyboardButton();
+            int age = 17 + i;
             keyitem.setText(Integer.toString(age));
 
             keyboardFirstRow.add(keyitem);
@@ -422,14 +415,12 @@ public class coreGUI  {
         }
 
 
-
-
         replyKeyboardMarkup.setKeyboard(keyboard);
         return sendMessage;
 
     }
-    public SendMessage registerSexBot(Message message, String text)
-    {
+
+    public SendMessage registerSexBot(Message message, String text) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
@@ -449,8 +440,8 @@ public class coreGUI  {
         // Добавляем кнопки в первую строчку клавиатуры
 
         // Добавляем кнопки во вторую строчку клавиатуры
-        KeyboardButton key2=new KeyboardButton();
-        KeyboardButton key=new KeyboardButton();
+        KeyboardButton key2 = new KeyboardButton();
+        KeyboardButton key = new KeyboardButton();
         //keyboardSecondRow.add("🚆Об университете");
         key2.setText("Муж");
 
@@ -469,8 +460,8 @@ public class coreGUI  {
         return sendMessage;
 
     }
-    public SendMessage DeleteBot(Message message, String text)
-    {
+
+    public SendMessage DeleteBot(Message message, String text) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
@@ -490,8 +481,8 @@ public class coreGUI  {
         // Добавляем кнопки в первую строчку клавиатуры
 
         // Добавляем кнопки во вторую строчку клавиатуры
-        KeyboardButton key2=new KeyboardButton();
-        KeyboardButton key=new KeyboardButton();
+        KeyboardButton key2 = new KeyboardButton();
+        KeyboardButton key = new KeyboardButton();
         //keyboardSecondRow.add("🚆Об университете");
         key2.setText("Да");
 
